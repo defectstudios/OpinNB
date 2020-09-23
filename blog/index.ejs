@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <%- include('imports') -%>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/styles/default.min.css">
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+  <%- include('navbar') %>
+  <div class="container">
+    <br>
+    <br>
+    <br>
+    <br>
+  <div class="mx-xl-5">
+    <div class="mx-xl-5">
+      <div class="mx-xl-5">
+        <div id="title">
+          <h1 class="text-center mb-5"><%- title %></h1>
+        </div>
+        <br>
+        <div class="mx-xl-5">
+          <div class="mx-xl-5"><div class="mx-xl-5">
+    <div id="post">
+      <%- post %>
+    </div></div></div></div></div></div>
+  </div>
+  <br>
+  <br>
+</div>
+     <!-- Card Dark -->
+     <div class="card bg-dark text-white mx-auto" style="max-width: 400px;">
+    
+      <!-- Card content -->
+      <div class="card-body elegant-color white-text rounded-bottom">
+
+        <!-- Social shares button -->
+        <div class="text-center"><a class="activator waves-effect"><i class="fas fa-share-alt white-text text-center" id="copyToClipboard" onclick="copyFunc()" style="cursor:cell;"></i></a></div>
+        <br>
+        <!-- Title -->
+        <h4 class="card-title text-center"><img src="<%= authorAvatar %>" height="25px" class="rounded-circle">&nbsp;&nbsp;<a id="goUserLink" class="text-white" href="<%- discordRequest.protocol %>://<%- discordRequest.get('host') %>/user/<%- authorID.slice(0, -1) %>"><%= authorRaw %></a> tarafından</h4>
+        <hr>
+        <!-- Text -->
+        <p class="card-text mb-4 text-center"><%- date %></p>
+        <hr>
+        <p class="text-center"><b>Blog ID:</b> <%- uid %></p>
+    
+      </div>
+    
+    </div>
+    <!-- Card Dark -->
+    <br>
+    <div class="mx-xl-5">
+      <div class="mx-xl-5">
+        <div class="mx-xl-5">
+          <div class="mx-xl-5">
+            <div class="mx-xl-5">
+              <div class="mx-xl-5">
+                <div class="mx-xl-5">
+                  <div class="mx-xl-5">
+                    <div class="mx-xl-5">
+                      <div class="mx-xl-5">
+                        <div class="mx-xl-5">
+                          <div class="mx-xl-5">
+                            <% const banneds = db.get(`ban.items`); %><% if (banneds.includes(`${discordRequest.user.id}`)) { %><p class="text-center">Yasaklandığınız için yorum yapamazsınız.</p><% } else { %>
+    <% if (config.comments === true) { %><br>
+      <form action="/newComment" method="POST" class="border border-primary">
+        <p class="h4 text-center my-3">Yorum Yap</p>
+        <hr class="w-25 mx-auto">
+        <p class="text-center"><img src="<%- pp %>" height="25px" class="rounded-circle shadow-1-strong">&nbsp;&nbsp;<%- discordRequest.user.username %>#<%- discordRequest.user.discriminator %> olarak</p>
+        <div class="form-outline my-1 mx-5">
+        <textarea name="newComment" cols="30" class="form-control" minlength="5" maxlength="900" required pattern="\S(.*\S)?"></textarea>
+        <label for="newComment" class="form-label">Yorumunuz</label>
+        <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 8px;"></div><div class="form-notch-trailing"></div></div>
+      </div>
+      <%
+      const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+      "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+      const dayNames = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi']
+      let dateObj = new Date();
+      let month = monthNames[dateObj.getMonth()];
+      let whichDay = dayNames[dateObj.getDay()];
+      let year = dateObj.getFullYear();
+      let hours = dateObj.getHours() + '.' + dateObj.getMinutes();
+      let outputWithDay = dateObj.getDate() + ' ' + month  + ' ' + year + ' ' + whichDay + ' ' + hours;
+      let output = dateObj.getDate() + ' ' + month  + ' ' + year + ' ' + hours;
+      %>
+        <input type="hidden" name="commentPostID" value="<%- uid %>">
+        <input type="hidden" name="commentAuthor" value="<%- discordRequest.user.username %>#<%- discordRequest.user.discriminator %>">
+        <input type="hidden" name="commentDate" value="<%- output %>">
+        <input type="hidden" name="commentAuthorAvatar" value="<%- pp %>">
+        <input type="hidden" name="commentAuthorID" value="<%- discordRequest.user.id %>">
+        <div class="text-center my-3"><button type="submit" class="btn btn-primary">Yorumu Paylaş</button></div>
+        </form>
+      <br><ul id="comments"><% try { %><% let cmmnts = db.get(`comments_${uid}.items`).map((cm) => {%><li class="card shadow-2-strong border border-primary"><div class="card-header text-white bg-primary"><img src="<%- cm.authorAvatar %>" style="height: 20px;" class="rounded-circle">&nbsp;&nbsp;<a class="text-white" href="<%- discordRequest.protocol %>://<%- discordRequest.get('host') %>/user/<%- cm.authorID %>" id="goUserLink"><%- cm.author %></a> tarafından - <%- cm.date %> - <small>ID: <%- cm.authorID %></small></div><div class="card-body"><p class="card-text"><%- cm.name %></p></div></li><br><%}); %><% } catch(err) { %> <p class="text-center">Henüz yorum yapılmamış.</p> <% } %></ul><% } else {%> <p class="text-center">Yorumlar devredışı.</p> <%} %>
+  </div>
+  <% } %>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+  <%- include('footer') %>
+  <style>
+    #goUserLink:hover {
+      color: #bdc3c7 !important;
+      cursor: pointer;
+    }
+    .aqua-gradient {
+      background: #ef32d9;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #89fffd, #ef32d9);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #89fffd, #ef32d9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    #post > p { font-size: 18px; }
+  </style>
+  <input type="text" value="" id="copyInp" style="position:absolute;left:-1000px;top:-1000px;">
+  <script>
+  let valueInput = document.getElementById("copyInp");
+  valueInput.value = window.location.href;
+function copyFunc() {
+  var copyText = document.getElementById("copyInp");
+  copyText.select();
+  document.execCommand("copy"); //this function copies the text of the input with ID "copyInp"
+  alert('Blogun paylaşım linki başarıyla kopyalandı!')
+}
+  </script>
+</body>
+</html>
+
+<!--https://ik.imagekit.io/xu2vr7vwlp/fallendarknesslogo_h2vaYgY2L.png-->

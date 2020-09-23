@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('imports') %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Ana Sayfa | <%- sitename %></title>
+    <link rel="stylesheet" href="dark-mode.css">
+ </head>
+  <body>
+    <%- include('navbar') %>
+    <div class="container">
+    <br>
+      <%
+        posts.forEach(f => {
+        const matterFile = matter.read(__dirname + '/blog/' + f);
+        console.log(matterFile.data.title)
+
+       %>
+        
+
+            <div class="card mx-auto border border-dark animate__animated animate__backInLeft" style="max-width: 400px;">
+
+              <div class="card-header text-center">
+                <img src="<%= matterFile.data.authorAvatar%>" height="25px" class="rounded-circle">&nbsp;&nbsp;<%= matterFile.data.authorRaw %> tarafından
+              </div>
+              <div class="card-body">
+                <h5 class="card-title text-center"><%= matterFile.data.title %></h5>
+                <p class="card-text text-muted cardtt" style="font-size: 16px;"><bold style="font-size: 30px;"><%= matterFile.content.slice(0, 1) %></bold><%= matterFile.content.slice(1, 120) %>...</p>
+                <br>
+                <div class="text-center"><a href="/blog/<%= matterFile.data.title %>" class="btn btn-primary">Okumaya devam et...</a></div>
+              </div>
+              <div class="card-footer text-muted text-center">
+                <%= matterFile.data.date %>
+              </div>
+            </div>
+            <br>
+
+        
+      <% }); %>
+      <br>
+    </div>
+    <style>
+      .cardtt {
+        opacity: 0.7;
+      }
+
+      .cardtt:hover {
+        opacity: 0.9;
+      }
+    </style>
+    <%- include('footer') %>
+  </body>
+</html>

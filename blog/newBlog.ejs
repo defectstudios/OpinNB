@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Blog | <%- sitename %></title>
+    <%- include('imports') -%>
+</head>
+<body>
+  
+  <%- include('navbar') -%>
+  <% if (config.personal === false) { %>
+  <div class="container"> 
+    <br>
+  <% if(locals.errors){ locals.errors.forEach(function(error){%>
+    <div class="note note-danger fade show" role="note"><strong>Hata:</strong> <%= error.msg %></div>
+    <br>
+    <% })} %>
+    <div id="postNewBlog">
+    <form action="/yayinla" method="post">
+      <div class="form-outline">
+            <input type="text" name="titt" id="titt" class="form-control">
+            <label for="titt" class="form-label">Başlık</label>
+            <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 8px;"></div><div class="form-notch-trailing"></div></div>
+          </div>
+          <br>
+          <div class="form-outline">
+            <textarea name="cont" id="textInput" rows="30" cols="200" class="form-control"></textarea>
+            <label for="cont" class="form-label">İçerik</label>
+            <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 8px;"></div><div class="form-notch-trailing"></div></div>
+          </div>
+          <% if (config.html === true) {%>
+          <div class="form-text"><a href="https://www.hostinger.web.tr/rehberler/html-nedir-hypertext-markup-language-hakkinda-genel-bilgiler/" target="_blank">HTML</a> ve <a href="https://www.markdownguide.org/getting-started/" target="_blank">Markdown</a> destekler.</div>
+          <% } else if (config.html === false) {%>
+            <div class="form-text"><a href="https://www.markdownguide.org/getting-started/" target="_blank">Markdown</a> destekler.</div>
+            <% } else { %>
+              <h1>HATA: lütfen config dosyasında html için true/false arasında bir seçenek belirtiniz.</h1>
+              <% } %>
+          <br>
+            <input type="hidden" name="author" value="<%= discordRequest.user.username %>#<%= discordRequest.user.discriminator %> (Kullanıcı ID <%= discordRequest.user.id %>)">
+            <input type="hidden" name="authorRaw" value="<%= discordRequest.user.username %>#<%= discordRequest.user.discriminator %>">
+            <input type="hidden" name="authorAvatar" value="https://cdn.discordapp.com/avatars/<%= discordRequest.user.id %>/<%= discordRequest.user.avatar %>.png">
+            <%
+            const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+            "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+            const dayNames = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi']
+            let dateObj = new Date();
+            let month = monthNames[dateObj.getMonth()];
+            let whichDay = dayNames[dateObj.getDay()];
+            let year = dateObj.getFullYear();
+            let output = dateObj.getDate() + ' ' + month  + ' ' + year + ' ' + whichDay;
+            %>
+            <input type="hidden" name="date" value="<%- output %>">
+            <input type="hidden" name="uid" value="" id="uidform">
+            <input type="hidden" name="authorID" value="<%- discordRequest.user.id %>">
+          <br>
+          <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">Yayınla</button>
+          <button class="btn btn-danger btn-lg">İptal</button>
+      </form>
+    </div>
+  
+  <br>
+  
+</div>
+
+<% } else if (discordRequest.user.id === config.admin) { %>
+  <div class="container"> 
+    <br>
+  <% if(locals.errors){ locals.errors.forEach(function(error){%>
+    <div class="note note-danger fade show" role="note"><strong>Hata:</strong> <%= error.msg %></div>
+    <br>
+    <% })} %>
+    <div id="postNewBlog">
+    <form action="/yayinla" method="post">
+      <div class="form-outline">
+            <input type="text" name="titt" id="titt" class="form-control">
+            <label for="titt" class="form-label">Başlık</label>
+            <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 8px;"></div><div class="form-notch-trailing"></div></div>
+          </div>
+          <br>
+          <div class="form-outline">
+            <textarea name="cont" id="textInput" rows="30" cols="200" class="form-control"></textarea>
+            <label for="cont" class="form-label">İçerik</label>
+            <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 8px;"></div><div class="form-notch-trailing"></div></div>
+          </div>
+          <% if (config.html === true) {%>
+          <div class="form-text"><a href="https://www.hostinger.web.tr/rehberler/html-nedir-hypertext-markup-language-hakkinda-genel-bilgiler/" target="_blank">HTML</a> ve <a href="https://www.markdownguide.org/getting-started/" target="_blank">Markdown</a> destekler. <b>Bu sayfayı sadece yöneticiler görebilir.</b></div>
+          <% } else if (config.html === false) {%>
+            <div class="form-text"><a href="https://www.markdownguide.org/getting-started/" target="_blank">Markdown</a> destekler. <b>Bu sayfayı sadece yöneticiler görebilir.</b></div>
+            <% } else { %>
+              <h1>HATA: lütfen config dosyasında html için true/false arasında bir seçenek belirtiniz.</h1>
+              <% } %>
+          <br>
+            <input type="hidden" name="author" value="<%= discordRequest.user.username %>#<%= discordRequest.user.discriminator %> (Kullanıcı ID <%= discordRequest.user.id %>)">
+            <input type="hidden" name="authorRaw" value="<%= discordRequest.user.username %>#<%= discordRequest.user.discriminator %>">
+            <input type="hidden" name="authorAvatar" value="https://cdn.discordapp.com/avatars/<%= discordRequest.user.id %>/<%= discordRequest.user.avatar %>.png">
+            <%
+            const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+            "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+            const dayNames = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi']
+            let dateObj = new Date();
+            let month = monthNames[dateObj.getMonth()];
+            let whichDay = dayNames[dateObj.getDay()];
+            let year = dateObj.getFullYear();
+            let output = dateObj.getDate() + ' ' + month  + ' ' + year + ' ' + whichDay;
+            %>
+            <input type="hidden" name="date" value="<%- output %>">
+            <input type="hidden" name="uid" value="" id="uidform">
+            <input type="hidden" name="authorID" value="<%- discordRequest.user.id %>">
+          <br>
+          <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">Yayınla</button>
+          <button class="btn btn-danger btn-lg">İptal</button>
+      </form>
+    </div>
+  
+  <br>
+  
+</div>
+  <% } else { %>
+    <p>Bu blog kişisel bir blog olmadığı için sadece yöneticiler blog paylaşabilir.</p>
+    <% } %>
+<%- include('footer') -%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
+<script>
+const myuid = uuidv4();
+const uuidForm = document.getElementById('uidform');
+console.log(myuid);
+
+uuidForm.setAttribute('value', myuid);
+</script>
+</body>
+</html>

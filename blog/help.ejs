@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <%- include('imports') %>
+</head>
+<body>
+    <%- include('navbar') %>
+    <h1 class="text-center mt-3">S.S.S</h1>
+    <h5 class="text-center">(Sıkça Sorulan Sorular)</h5>
+    <% try { %><% let quests = db.get('sss.items').map((qq) => { %> <div class="container"><div class="note note-info my-5"><h5><strong><i class="material-icons text-primary">question_answer</i><br><br>&nbsp;&nbsp;<i class="far fa-caret-square-down text-primary"></i>&nbsp;<%- qq.question %></strong><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-hand-point-right text-primary"></i>&nbsp;<small><%- qq.answer %></small></h5></div></div><% }); %><% } catch (err) { %><p class="my-5 ml-5 text-center">Yönetici, herhangi bir S.S.S sorusu oluşturmamış. </p><% } %>
+    <%- include('footer') %>
+</body>
+</html>

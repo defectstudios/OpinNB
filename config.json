@@ -1,0 +1,17 @@
+{
+    "sitename": "Sitenizin İsmi",
+    "tanitim": [
+        { "baslik": "Senin alanın, Senin tarzın.", "content": "Bilgi güçtür. İlgi duydunuz konuları burada bulabilir veya fikirlerinizi ve ilgilerinizi insanlar ile paylaşmak ve duyurmak için paylaşımlar yapabilirsiniz!" },
+        { "baslik": "Bilgi güçtür. Ne kadar kendine bilgi katarsan o kadar güçlüsündür.", "content": "Bize katıl, bilgine bilgi, gücüne güç kat!" },
+        { "baslik": "Tamamen ÜCRETSİZ, Canınızı sıkan sert kısıtlamalar yok!", "content": "Düşüncemizce bilgi ÜCRETSİZ olmalıdır. Günümüzde ne yazıkki bilgi çoğunlukla karşılıksız verilmiyor ve biz bu düşünceyi kırmak için çabalıyoruz." }
+    ],
+    "checklist": {
+        "first": "İhtiyaç Duyacağınız Bilgiler ve Fikirler Burada. Hemen Keşfetmeye Başla!",
+        "second": "Canınızı Sıkan Sert Kısıtlamalar Yok. ÜCRETSİZ!",
+        "third": "Fikirlerin Ne Olursa Olsun, Burada Hepsine Yer Var!"
+    },
+    "html": false,
+    "admin": "450732101608931328",
+    "personal": false,
+    "comments": true
+}

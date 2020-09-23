@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | <%- sitename %></title>
+    <%- include('imports') -%>
+</head>
+<body>
+    <%- include('navbar') -%>
+    <% if (discordRequest.user.id === config.admin) { %>
+    <div class="container">
+      <br>
+      <br>
+      <div class="card border border-info">
+        <div class="card-body">
+          <h5 class="card-header mb-2">Yeni S.S.S</h5>
+      <form action="/newfaq" method="POST">
+        <div class="form-outline">
+        <input type="text" name="question" class="form-control">
+        <label for="question" class="form-label">Soru</label>
+        <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 8px;"></div><div class="form-notch-trailing"></div></div>
+      </div>
+      <br>
+      <div class="form-outline">
+        <textarea type="text" name="answer" class="form-control"></textarea>
+        <label for="answer" class="form-label">Cevap</label>
+        <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 8px;"></div><div class="form-notch-trailing"></div></div>
+      </div>
+      <button class="btn btn-primary my-3" type="submit">Oluştur</button>
+      </form>
+    </div>
+  </div>
+  <br>
+  <div class="card border border-danger">
+    <div class="card-body">
+      <h5 class="card-header mb-2">Post Sil</h5>
+  <form action="/deletePost" method="POST">
+    <div class="form-outline">
+    <input type="text" name="targetPost" class="form-control">
+    <label for="targetPost" class="form-label">Post Başlığı</label>
+    <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 8px;"></div><div class="form-notch-trailing"></div></div>
+  </div>
+  <button class="btn btn-danger my-3" type="submit">Sil</button>
+  <div>Bu işlem geri alınamaz.</div>
+  </form>
+  </div>
+  </div>
+  <br>
+  <div class="card border border-warning">
+    <div class="card-body">
+      <h5 class="card-header mb-2">Blog Yorumlarını Sıfırla</h5>
+  <form action="/deleteComment" method="POST">
+    <div class="form-outline">
+      <input type="text" name="targetPostID" class="form-control">
+      <label for="targetPostID" class="form-label">Hedef Blog ID</label>
+      <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 8px;"></div><div class="form-notch-trailing"></div></div>
+    </div>
+  <button class="btn btn-warning my-3" type="submit">Yorumu Sil</button>
+  <div>Bu işlem geri alınamaz.</div>
+  </form>
+  </div>
+  </div>
+  <br>
+  <div class="card border border-danger">
+    <div class="card-body">
+      <h5 class="card-header mb-2">Kullanıcı Yasakla</h5>
+  <form action="/banUser" method="POST">
+    <div class="form-outline">
+      <input type="text" name="targetUserID" class="form-control">
+      <label for="targetUserID" class="form-label">Kullanıcı ID</label>
+      <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 8px;"></div><div class="form-notch-trailing"></div></div>
+    </div>
+  <button class="btn btn-danger my-3" type="submit">Yasakla</button>
+  </form>
+  </div>
+  </div>
+  <br>
+  <br>
+  <div class="card border border-success">
+    <div class="card-header">Yasaklananlar</div>
+    <div class="card-body">
+      <ul id="banList">
+      <%
+      let banListGet = db.get(`ban.items`);
+      banListGet.map((i) => { %>
+          <li><%- i %></li>
+        
+      <% });
+      %>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#unbanAllModal">Tüm Yasaklamaları Kaldır</button>
+  </div>
+  </div>
+  <br>
+  <div class="card border border-primary">
+    <div class="card-header">Veri Tabanı</div>
+    <div class="card-body">
+      <p>SQLite3 kullanır. Önerilen veritabanı araçları: <a href="https://sqlitebrowser.org/">SQLite Browser</a>, <a href="https://sqlitestudio.pl/">SQLiteStudio</a></p>
+        <button class="btn btn-primary my-3" onclick="window.open('/download/database')">VERİTABANINI İNDİR</button>
+      
+  </div>
+  </div>
+  <br>
+        <br>
+        <%
+        posts.forEach(f => {
+        const matterFile = matter.read(__dirname + '/blog/' + f);
+        console.log(matterFile.data.title)
+
+       %>
+
+
+       <div class="card mx-auto border border-primary animate__animated animate__backInLeft" style="max-width: 400px;">
+        <div class="card-header text-center text-primary">
+          <img src="<%= matterFile.data.authorAvatar %>" height="25px" class="rounded-circle">&nbsp;&nbsp;<%= matterFile.data.author %>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center"><%= matterFile.data.title %></h5>
+          <br>
+          Yol: <%= matterFile.path %>
+          <br>
+          <br>
+          Blog ID: <%= matterFile.data.uid %>
+          <br>
+          <br>
+          <div class="text-center"><a href="/blog/<%= post.slice(0, -3) %>" class="btn btn-success">İncele...</a></div>
+        </div>
+        <div class="card-footer text-center text-primary">
+          <%= matterFile.data.date %>
+        </div>
+      </div>
+      <br>
+
+
+       <% })%>
+        <br>
+    </div>
+    <% } else { %>
+        <br>
+        <p>Bu sayfayı görüntülemek için yetkiniz yok.</p>
+        <br>
+        <% } %>
+
+        <!-- Modal -->
+        <form action="/unbanAll" method="POST">
+<div
+class="modal fade"
+id="unbanAllModal"
+tabindex="-1"
+aria-labelledby="modalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="modalLabel">Uyarı</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true"><i class="material-icons">cancel_presentation</i></span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Tüm yasaklamaları kaldırmak istediğinden emin misin?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal">
+        <i class="far fa-times-circle" style="font-size: 15px;"></i>
+        İptal
+      </button>
+      
+      <button type="submit" class="btn btn-success w-50" id="unbanAllConfirm"><i class="far fa-check-square" style="font-size: 15px;"></i>&nbsp;&nbsp;Evet</button>
+  </div>
+  </div>
+</div>
+</div>
+</form>
+<!-- Modal -->
+
+    <%- include('footer') -%>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<% if (config.personal === false) { %>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/"><%- sitename %>&nbsp;<span class="badge bg-light text-primary">BLOG</span></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link text-white" href="/">Ana Sayfa</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/yayinla">Yeni Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/me">Ben</a>
+          </li>
+          <% if (discordRequest.user.id === config.admin) { %>
+            <li class="nav-item">
+              <a href="/admin" class="nav-link text-white">Yönetici Paneli</a>
+            </li>
+            <% } else {}%>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/help">Yardım</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav">
+          <!-- Avatar -->
+          <li class="nav-item dropdown" style="padding-right: 100px;">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+              <img src="<%- pp %>" class="rounded-circle" height="50" alt="" loading="lazy">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="/me" style="color: #212529;"><strong><%- discordRequest.user.username %></strong>#<%- discordRequest.user.discriminator %></a></li>
+              <div class="dropdown-divider"></div>
+              <li><a class="dropdown-item" href="/me"><i class="fas fa-user-cog"></i>&nbsp;&nbsp;Ben</a></li>
+              <li><a class="dropdown-item" href="/yayinla"><i class="far fa-plus-square"></i>&nbsp;&nbsp;Yeni Blog</a></li>
+              <li><a class="dropdown-item" href="/me/edit"><i class="fas fa-user-edit"></i>&nbsp;&nbsp;Profilimi Düzenle</a></li>
+              <li><a class="dropdown-item" href="/cikis"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Çıkış Yap</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <% } else if (discordRequest.user.id === config.admin) { %>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/"><%- sitename %>&nbsp;<span class="badge bg-light text-primary">BLOG</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+          <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link text-white" href="/">Ana Sayfa</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/yayinla">Yeni Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/me">Ben</a>
+            </li>
+            <% if (discordRequest.user.id === config.admin) { %>
+              <li class="nav-item">
+                <a href="/admin" class="nav-link text-white">Yönetici Paneli</a>
+              </li>
+              <% } else {}%>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/help">Yardım</a>
+            </li>
+          </ul>
+  
+          <ul class="navbar-nav">
+            <!-- Avatar -->
+            <li class="nav-item dropdown" style="padding-right: 100px;">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+                <img src="<%- pp %>" class="rounded-circle" height="50" alt="" loading="lazy">
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="/me" style="color: #212529;"><strong><%- discordRequest.user.username %></strong>#<%- discordRequest.user.discriminator %></a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item" href="/me"><i class="fas fa-user-cog"></i>&nbsp;&nbsp;Ben</a></li>
+                <li><a class="dropdown-item" href="/yayinla"><i class="far fa-plus-square"></i>&nbsp;&nbsp;Yeni Blog</a></li>
+                <li><a class="dropdown-item" href="/me/edit"><i class="fas fa-user-edit"></i>&nbsp;&nbsp;Profilimi Düzenle</a></li>
+                <li><a class="dropdown-item" href="/cikis"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Çıkış Yap</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  <% } else { %>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/"><%- sitename %>&nbsp;<span class="badge bg-light text-primary">BLOG</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+          <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link text-white" href="/">Ana Sayfa</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/me">Ben</a>
+            </li>
+            <% if (discordRequest.user.id === config.admin) { %>
+              <li class="nav-item">
+                <a href="/admin" class="nav-link text-white">Yönetici Paneli</a>
+              </li>
+              <% } else {}%>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/help">Yardım</a>
+            </li>
+          </ul>
+  
+          <ul class="navbar-nav">
+            <!-- Avatar -->
+            <li class="nav-item dropdown" style="padding-right: 100px;">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+                <img src="<%- pp %>" class="rounded-circle" height="50" alt="" loading="lazy">
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="/me" style="color: #212529;"><strong><%- discordRequest.user.username %></strong>#<%- discordRequest.user.discriminator %></a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item" href="/me"><i class="fas fa-user-cog"></i>&nbsp;&nbsp;Ben</a></li>
+                <li><a class="dropdown-item" href="/me/edit"><i class="fas fa-user-edit"></i>&nbsp;&nbsp;Profilimi Düzenle</a></li>
+                <li><a class="dropdown-item" href="/cikis"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Çıkış Yap</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+<% } %>

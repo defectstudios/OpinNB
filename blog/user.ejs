@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <%- include('imports') %>
+</head>
+<body>
+    <%- include('navbar') %>
+            <div class="graBG pt-5 pb-5">
+            <div class="container">
+              <div class="mx-xl-5">
+                <div class="mx-xl-5">
+                  <div class="mx-xl-5">
+                    <div class="mx-xl-5">
+                      <div class="mx-xl-5">
+                        <div class="mx-xl-5">
+                          <!-- Jumbotron -->
+<div class="jumbotron p-0 bg-light shadow-lg rounded">
+      <div class="card text-center">
+        <div class="card-header bg-dark">
+          <div class="row my-4"><div class="col"><h3 class="h3 text-white my-5"><strong><%- myUser.username %></strong><small class="h6" style="opacity: 0.7;">#<%- myUser.userdiscriminator %></small><br><small class="h6" style="opacity: 0.3;"><strong>ID:</strong> <%- myUser.userid %></small></h3></div><div class="col"><img src="<%- myUser.useravatar %>" class="rounded-circle"></div></div>
+        </div>
+        <div class="card-body bg-elegant text-white" style="background-color: #424242;">
+          <% let userBusinessStatus = db.get(`businessstatus_${myUser.userid}`); %><% if (!userBusinessStatus) { %><h5 class="card-title">Kullanıcı</h5><% } else { %><h5 class="card-title"><%- userBusinessStatus %></h5><% } %>
+          <hr>
+          <p class="card-text">
+            <h5>Biyografi</h5>
+            <% let userBio = db.get(`bio_${myUser.userid}`);  %><% if (!userBio) { %>Biyografi Yok.<% } else { %><%- userBio %><% } %>
+          </p>
+        </div>
+        <% let userCustomStatus = db.get(`customstatus_${myUser.userid}`); %><% if (!userCustomStatus) {  } else { %><div class="card-footer bg-dark text-white"><%- userCustomStatus %></div><% } %>
+      </div>
+
+</div>
+<!-- Jumbotron -->
+        
+          </div>
+        </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <%- include('footer') %>
+    <style>
+    .graBG {
+    background: linear-gradient(270deg, #fff200, #ff3838, #18dcff, #32ff7e);
+    background-size: 800% 800%;
+
+    -webkit-animation: gradientFadeTurkish 20s ease infinite;
+    -moz-animation: gradientFadeTurkish 20s ease infinite;
+    -o-animation: gradientFadeTurkish 20s ease infinite;
+    animation: gradientFadeTurkish 20s ease infinite;
+}
+
+@-webkit-keyframes gradientFadeTurkish {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes gradientFadeTurkish {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-o-keyframes gradientFadeTurkish {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes gradientFadeTurkish {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+    </style>
+</body>
+</html>
